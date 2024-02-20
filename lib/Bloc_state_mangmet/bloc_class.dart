@@ -11,7 +11,8 @@ class CreateData  extends Cubit<StatesApp> {
   final DataFetcher datafetcher =DataFetcher();
 
   void fetchData() {
-    datafetcher.fetchData();
+    emit(LoadingDataState());
+    datafetcher.fetchData().then((value) => emit(ErrorGetDataState()));
   }
 
 }
