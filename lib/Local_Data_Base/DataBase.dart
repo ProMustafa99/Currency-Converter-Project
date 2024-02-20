@@ -36,12 +36,7 @@ class InsertDate extends CreateDataBase {
 class GetData {
   Future <void> getdata (database)  async {
      await database.rawQuery('SELECT * FROM CurrencyInfo')
-         .then((value)  {
-          listCrrany = value;
-          // listCrrany.forEach((element) {
-          //   print(element["CodeCurrency"]);
-          // });
-     });
+         .then((value) => listCrrany = value);
   }
 
 }

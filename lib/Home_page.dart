@@ -1,12 +1,8 @@
 import 'package:currency_converter/Bloc_state_mangmet/bloc_class.dart';
-import 'package:currency_converter/Bloc_state_mangmet/bloc_class.dart';
 import 'package:currency_converter/Bloc_state_mangmet/states.dart';
-import 'package:currency_converter/Shared_Preferences/shared_preferences.dart';
 import 'package:currency_converter/Widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/sqlite_api.dart';
 
 
 class HomePage extends StatefulWidget {

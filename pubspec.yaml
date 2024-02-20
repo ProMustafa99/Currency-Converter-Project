@@ -36,6 +36,7 @@ dependencies:
   sqflite: ^2.3.0
   shared_preferences: ^2.2.2
   fluttertoast: ^8.2.4
+  conditional_builder_null_safety: ^0.0.6
 
 
   # The following adds the Cupertino Icons font to your application.
