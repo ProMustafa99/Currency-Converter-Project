@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:currency_converter/API/api.dart';
 import 'package:currency_converter/Bloc_state_mangmet/states.dart';
-import 'package:currency_converter/Error/Error.dart';
-import 'package:currency_converter/Local_Data_Base/DataBase.dart';
 import 'package:currency_converter/Shared_Preferences/shared_preferences.dart';
 import 'package:currency_converter/Widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,21 +9,38 @@ import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
 
 
-class CreateData  extends Cubit<StatesApp> {
+class Currency  extends Cubit<StatesApp> {
 
-  CreateData(super.initialState);
-  static CreateData get(context) =>BlocProvider.of(context);
-  final FetchData cr2 = FetchData();
-  List <Map> listCrrany1 = [] ;
+  Currency(super.initialState);
+  static Currency get(context) =>BlocProvider.of(context);
+
+  final FetchCurrency _fetchcurrency = FetchCurrency();
+  double resultconvert =0;
+
 
   void fetchData() async {
-    await cr2.fetchData();
+    await _fetchcurrency.fetchData();
     emit(DoneFeactGetDataState());
+  }
+
+  Future<void> convertcurrency(String base_currency, String Currencies, Amount) async {
+
+    final response = await http.get(Uri.parse(
+        'https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_rKuggFlZGYXHB4LPf3Xd1uGFfdpc1brmnqelV37P&currencies=${Currencies}&base_currency=${base_currency}'));
+    if (response.statusCode == 200) {
+      Map CurrencyName =json.decode(response.body);
+      resultconvert = CurrencyName['data'][Currencies] *Amount.toDouble();
+      print(resultconvert);
+      emit(DoneConvert());
+    } else {
+      print('Failed to load data');
+      emit(ErrorConvert());
+    }
   }
 }
 
 
-class  FetchData {
+class  FetchCurrency {
 
   final CreateDataBase CDB = CreateDataBase();
   late CurrencyApi api;
@@ -102,13 +117,14 @@ class InsertData {
 }
 
 class GetData {
-  getdata (database)  {
-    print("Done Get Data");
+  getdata(database) {
+    print("Getting Data...");
     database.rawQuery('SELECT * FROM CurrencyInfo').then((value) {
-      listCrrany = value;
-
+      listCrrany.clear();
+       listCrrany  = value.map((item) => item['CodeCurrency']).toList();
     });
   }
 }
+
 
 

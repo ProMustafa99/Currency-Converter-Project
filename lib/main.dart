@@ -1,5 +1,4 @@
 import 'package:currency_converter/Bloc_state_mangmet/ObserverClass;.dart';
-import 'package:currency_converter/Bloc_state_mangmet/bloc_class.dart';
 import 'package:currency_converter/Home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

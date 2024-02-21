@@ -1,44 +1,40 @@
 import 'package:flutter/material.dart';
 
+class DropDowmmenu extends StatefulWidget {
+  final List<dynamic> listCrrauncy;
+  final Function(dynamic)? onChanged;
 
-class CustomDropdown<T> extends StatefulWidget {
-  final List<T> items;
-  final T? value;
-  final ValueChanged<T?>? onChanged;
-
-  CustomDropdown({required this.items, this.value, this.onChanged});
+  DropDowmmenu(this.listCrrauncy, {this.onChanged});
 
   @override
-  _CustomDropdownState<T> createState() => _CustomDropdownState<T>();
+  State<DropDowmmenu> createState() => _DropDowmmenuState();
 }
 
+class _DropDowmmenuState extends State<DropDowmmenu> {
 
-class _CustomDropdownState<T> extends State<CustomDropdown<T>> {
-  late T _selectedValue;
+  late dynamic selectedValue;
 
   @override
   void initState() {
     super.initState();
-    _selectedValue = widget.value ?? widget.items.first;
+    selectedValue = widget.listCrrauncy.isNotEmpty ? widget.listCrrauncy.first: null;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: DropdownButton<T>(
-        value: _selectedValue,
-        onChanged: (newValue) {
+      child: DropdownButton(
+        value: selectedValue,
+        onChanged: (val) {
           setState(() {
-            _selectedValue = newValue!;
-            widget.onChanged?.call(newValue);
+            selectedValue = val;
           });
+          widget.onChanged?.call(val); // Call the onChanged callback if provided
         },
-        items: widget.items.map<DropdownMenuItem<T>>((T value) {
-          return DropdownMenuItem<T>(
-            value: value,
-            child: Text(value.toString()),
-          );
-        }).toList(),
+        items: widget.listCrrauncy.map((e) => DropdownMenuItem(
+          child: Text("$e"),
+          value: e,
+        )).toList(),
       ),
     );
   }

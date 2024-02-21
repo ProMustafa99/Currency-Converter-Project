@@ -3,19 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sqflite/sqlite_api.dart';
 
+
+// Global Vrabel
+List listCrrany = [];
+dynamic Base_Currency;
+dynamic To_Currency ;
+var database;
+var ResultConvert ;
+var FormKey = GlobalKey<FormState>();
+
+
+// Global Widget
+
 Widget InputUser(TextEditingController controller) {
-  return Padding(
-    padding: const EdgeInsets.all(20.0),
-    child: TextFormField(
-        controller: controller,
-        keyboardType: TextInputType.number,
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Amount',
-        )
-    ),
+  return TextFormField(
+      controller: controller,
+      keyboardType: TextInputType.number,
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(),
+        hintText: 'Amount',
+      ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please Please enter the Amount';
+        }
+      }
   );
 }
+
 void Tosta_mes({required String mess, Color? color}) => Fluttertoast.showToast(
     msg: mess,
     toastLength: Toast.LENGTH_SHORT,
@@ -25,7 +40,7 @@ void Tosta_mes({required String mess, Color? color}) => Fluttertoast.showToast(
     textColor: Colors.white,
     fontSize: 16.0);
 
-List <Map> listCrrany = [] ;
-int x =0 ;
-var database;
+
+
+
 

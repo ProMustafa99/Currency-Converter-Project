@@ -1,11 +1,12 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
-import 'package:currency_converter/Bloc_state_mangmet/bloc_class.dart';
 import 'package:currency_converter/Bloc_state_mangmet/states.dart';
 import 'package:currency_converter/CustomDropDown.dart';
 import 'package:currency_converter/Widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'Bloc_state_mangmet/CurrencyBloc.dart';
 
+String SelectedCrruancy ="USD";
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,92 +17,108 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
-
   Widget build(BuildContext context) {
+    TextEditingController Amount = TextEditingController();
 
-    TextEditingController controller =TextEditingController();
-
-    List <String> items=[];
-    return   BlocProvider(
-        create: (context)=>CreateData(InitialState())..fetchData(),
-
-        child: BlocConsumer<CreateData , StatesApp> (
-          listener: (context , state)  {
-
-          },
-          builder : (context , state) {
-            return  ConditionalBuilder(
-              condition: listCrrany.length >0 ,
+    return BlocProvider(
+        create: (context) => Currency(InitialState())..fetchData(),
+        child: BlocConsumer<Currency, StatesApp>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            return ConditionalBuilder(
+              condition: listCrrany.length > 0,
               builder: (context) {
+                print(listCrrany);
 
-                listCrrany.forEach((element) {
-                  items.add(element['CodeCurrency']);
-                });
-
-                print(items);
                 return Scaffold(
-                  appBar: AppBar(title: const Text('Currency Converter'),),
-                  body: Container(
-                    child: Column(
-                      children: [
+                  appBar: AppBar(
+                    title: const Text('Currency Converter'),
+                  ),
+                  body: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Form(
+                      key: FormKey,
 
-                        InputUser(controller),
-                        const SizedBox(height: 20,),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20,right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                      child: Column(
+                        children: [
+
+                          InputUser(Amount),
+
+                          const SizedBox(
+                            height: 40,
+                          ),
+
+                          Row(
                             children: [
-                              Expanded (
-                                child:  CustomDropdown<String>(
-                                  items:items,
-                                  onChanged: (value) {
-                                    print('Selected: $value');
-                                  },
-                                ),
 
+                              DropDowmmenu(
+                                  listCrrany ,
+                                  onChanged: (newValue) {
+                                     Base_Currency = newValue;
+                                  }
                               ),
 
-                             const  SizedBox(width:20 ,),
-
+                              const SizedBox(width: 15),
                               IconButton(
-                                  onPressed: () {},
-                                  icon:Icon(Icons.swap_horiz)),
-
-                             const SizedBox(width:20 ,),
-                              Expanded (
-                                child:  CustomDropdown<String>(
-                                  items:items,
-                                  onChanged: (value) {
-                                    print('Selected: $value');
-                                  },
-                                ),
-
+                                  onPressed: (){},
+                                  icon: Icon(Icons.swap_horiz)
                               ),
-
+                              const SizedBox(width: 15),
+                              DropDowmmenu(
+                                listCrrany,
+                                onChanged: (newValue){
+                                  To_Currency = newValue;
+                                },
+                              )
                             ],
-                          ),
-                        ),
+                          ) ,
 
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: ElevatedButton(
-                            onPressed: () {
-                            },
-                            style: ButtonStyle(
-                              fixedSize: MaterialStateProperty.all(Size(MediaQuery.of(context).size.width, 60)),
-                              backgroundColor: MaterialStateProperty.all(Colors.white),
-                              shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  side: const BorderSide(color: Colors.blue, width: 2),
-                                ),
-                              ),
-                            ),
-                            child: const Text('Converter', style: TextStyle(color: Colors.blue, fontSize: 20)),
+                          const SizedBox(
+                            height: 40,
                           ),
-                        ),
-                      ],
+
+                          ElevatedButton(
+                            onPressed: () {
+                              String text = Amount.text;
+                              double value = double.tryParse(text) ?? 0.0;
+
+                              if(FormKey.currentState!.validate()) {
+                                Currency.get(context).convertcurrency(Base_Currency, To_Currency, value);
+                              }
+
+                            },
+                            child: const Text("Convert"),
+
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.zero, // Remove padding to stretch the button
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8), // Optional: set border radius
+                              ),
+                              minimumSize: Size(double.infinity, 48), // Set minimum size to span width and height 48
+                            ),
+
+                          ),
+
+                          const SizedBox(
+                            height: 40,
+                          ),
+
+                          Container(
+                              padding: EdgeInsets.all(16.0), // Add margin of 16 pixels to all sides
+                              decoration: BoxDecoration(
+                                color: Colors.blue.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child:  Column(
+                                children: [
+                                  Text('Result:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                                  const SizedBox(height: 20,),
+                                  Text("${Currency.get(context).resultconvert}"),
+                                ],
+                              )
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );
@@ -112,9 +129,7 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             );
-          } ,
-        )
-    );
+          },
+        ));
   }
 }
-
