@@ -4,13 +4,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sqflite/sqlite_api.dart';
 
 Widget InputUser(TextEditingController controller) {
-  return TextFormField(
-      controller: controller,
-      decoration: const InputDecoration(
-        prefixIcon: Icon(Icons.menu),
-        border: OutlineInputBorder(),
-        hintText: 'Enter Name Task ',
-      ));
+  return Padding(
+    padding: const EdgeInsets.all(20.0),
+    child: TextFormField(
+        controller: controller,
+        keyboardType: TextInputType.number,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: 'Amount',
+        )
+    ),
+  );
 }
 void Tosta_mes({required String mess, Color? color}) => Fluttertoast.showToast(
     msg: mess,
@@ -22,4 +26,6 @@ void Tosta_mes({required String mess, Color? color}) => Fluttertoast.showToast(
     fontSize: 16.0);
 
 List <Map> listCrrany = [] ;
+int x =0 ;
+var database;
 
