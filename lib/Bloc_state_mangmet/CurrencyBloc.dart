@@ -51,20 +51,33 @@ class Currency  extends Cubit<StatesApp> {
 
   Future <void> Historical () async {
 
-
     DateTime today = DateTime.now();
     today = DateTime(today.year, today.month, today.day); // Set time to midnight
     DateTime sevenDaysAgo = today.subtract(Duration(days: 7));
     DateFormat formatter = DateFormat('yyyy-MM-dd');
-    DateTime dateWithoutTime = DateTime(sevenDaysAgo.year, sevenDaysAgo.month, sevenDaysAgo.day);
-    String formattedDate = formatter.format(dateWithoutTime);
-    last7Days = formattedDate;
-    print(last7Days);
 
-    apitest(
-        "https://api.freecurrencyapi.com/v1/historical",
-        "apikey=fca_live_rKuggFlZGYXHB4LPf3Xd1uGFfdpc1brmnqelV37P",
-        "currencies=EUR&date_from=${last7Days}T08%3A47%3A25.289Z&date_to=${last7Days}T08%3A47%3A25.289Z").test();
+    for (int i = 0; i < 7; i++) {
+      DateTime dateWithoutTime =
+      DateTime(sevenDaysAgo.year, sevenDaysAgo.month, sevenDaysAgo.day);
+      String formattedDate = formatter.format(dateWithoutTime);
+      last7Days.add(formattedDate);
+      sevenDaysAgo = sevenDaysAgo.add(Duration(days: 1));
+    }
+
+    final currencyApi = CurrencyApi(
+      apiUrl: 'https://api.freecurrencyapi.com/v1/historical',
+      apiKey: 'fca_live_rKuggFlZGYXHB4LPf3Xd1uGFfdpc1brmnqelV37P',
+    );
+
+    try {
+      Map DatatHistorical = await currencyApi.fetchHistoricalRateRates(last7Days.first);
+      ResultHistorical = DatatHistorical['data'][last7Days.last]["AUD"];
+    }
+    catch(e){
+      print("${e} *********************");
+      ErrorHandler(e.toString());
+    }
+
 
     emit(DoneHistorical());
 
@@ -93,7 +106,6 @@ class  FetchCurrency {
 
         CurrencyInfo['data'].forEach((key, value) {
           CDB.ObjectInsert.insert(key, database);
-          print(key);
         });
         Cash_Data().Save_Data(key: 'currency', value: true);
       }
@@ -163,13 +175,17 @@ class apitest {
   final base_link;
   final key;
   final date;
-  apitest(this.base_link , this.key,  this.date);
+  apitest(this.base_link , this.key,  this.date) {
+
+
+  }
 
   Future <void> test ()  async{
     final response = await http.get(Uri.parse('$base_link?$key&$date'));
     if (response.statusCode == 200) {
-      json.decode(response.body);
-      print( json.decode(response.body));
+       HistoricalRate = json.decode(response.body)['data'][last7Days.last]['AUD'];
+       print(HistoricalRate);
+
     } else {
       print('Failed to load data');
     }

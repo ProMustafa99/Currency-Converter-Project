@@ -1,13 +1,11 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:currency_converter/Bloc_state_mangmet/states.dart';
 import 'package:currency_converter/CustomDropDown.dart';
-import 'package:currency_converter/Styel/styel.dart';
 import 'package:currency_converter/Widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Bloc_state_mangmet/CurrencyBloc.dart';
 
-String SelectedCrruancy ="USD";
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -27,7 +25,7 @@ class _HomePageState extends State<HomePage> {
           listener: (context, state) {},
           builder: (context, state) {
             return ConditionalBuilder(
-              condition: listCrrany.length > 0,
+              condition: listCrrany.isNotEmpty,
               builder: (context) {
 
                 return Scaffold(
@@ -38,104 +36,109 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.all(15.0),
                     child: Form(
                       key: FormKey,
-                      child: Column(
-                        children: [
-
-                          InputUser(Amount),
-
-                          const SizedBox(
-                            height: 40,
-                          ),
-
-                          Row(
-                            children: [
-
-                              DropDowmmenu(
-                                  listCrrany ,
-                                  onChanged: (newValue) {
-                                     Base_Currency = newValue;
-                                  }
-                              ),
-                              const SizedBox(width: 15),
-                              IconButton(
-                                  onPressed: (){
-
-                                  },
-                                  icon: const Icon(Icons.swap_horiz)
-                              ),
-                              const SizedBox(width: 15),
-                              DropDowmmenu(
-                                listCrrany,
-                                onChanged: (newValue){
-                                  To_Currency = newValue;
-                                },
-                              )
-                            ],
-                          ) ,
-
-                          const SizedBox(height: 40,),
-
-                          ElevatedButton(
-                            onPressed: () {
-                              String text = Amount.text;
-                              double value = double.tryParse(text) ?? 0.0;
-
-                              if(FormKey.currentState!.validate()) {
-                                Currency.get(context).convertcurrency(Base_Currency, To_Currency, value);
-                              }
-
-                            },
-
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.zero, // Remove padding to stretch the button
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8), // Optional: set border radius
-                              ),
-                              minimumSize: const Size(double.infinity, 48), // Set minimum size to span width and height 48
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            InputUser(Amount),
+                            const SizedBox(
+                              height: 40,
                             ),
-                            child: const Text("Convert"),
-
-                          ),
-
-                          const SizedBox(
-                            height: 40,
-                          ),
-
-                          Container(
-                              padding: const EdgeInsets.all(16.0), // Add margin of 16 pixels to all sides
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                color: Colors.blue.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child:  Column(
+                            Container(
+                              child:  Row(
                                 children: [
-                                  const Text('Result:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                                  const SizedBox(height: 20,),
-                                  Text("${Currency.get(context).resultconvert}"),
+                                  Expanded(child: 
+                                  DropDownMenu(
+                                      listCrrany ,
+                                      onChanged: (newValue) {
+                                        Base_Currency = newValue;
+                                      }
+                                  ),
+                                  ),
+                                  const SizedBox(width: 15),
+                                  IconButton(
+                                      onPressed: (){
+
+                                      },
+                                      icon: const Icon(Icons.swap_horiz)
+                                  ),
+                                  const SizedBox(width: 15),
+                                  Expanded(
+                                    child: DropDownMenu(
+                                      listCrrany,
+                                      onChanged: (newValue){
+                                        To_Currency = newValue;
+                                      },
+                                    ),
+                                  )
                                 ],
-                              )
-                          ),
+                              ) ,
+                            ),
 
-                          const SizedBox(
-                            height: 40,
-                          ),
+                            const SizedBox(height: 40,),
 
-                          Container(
-                              padding: const EdgeInsets.all(16.0), // Add margin of 16 pixels to all sides
-                              width: MediaQuery.of(context).size.width,
-                              decoration: BoxDecoration(
-                                color: Colors.blue.withOpacity(0.2),
-                                borderRadius: BorderRadius.circular(6),
+                            ElevatedButton(
+                              onPressed: () {
+                                String text = Amount.text;
+                                double value = double.tryParse(text) ?? 0.0;
+                                if(FormKey.currentState!.validate()) {
+                                  Currency.get(context).convertcurrency(Base_Currency, To_Currency, value);
+                                }
+                              },
+
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.zero, // Remove padding to stretch the button
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8), // Optional: set border radius
+                                ),
+                                minimumSize: const Size(double.infinity, 48), // Set minimum size to span width and height 48
                               ),
-                              child: Column(
-                                children: [
-                                  Text("Historical From USD TO AUD == > "),
-                                  Text("Date ${last7Days}"),
-                                ],
-                              )
-                          ),
-                        ],
+                              child: const Text("Convert"),
+
+                            ),
+
+                            const SizedBox(
+                              height: 40,
+                            ),
+
+                            Container(
+                                padding: const EdgeInsets.all(10.0), // Add margin of 16 pixels to all sides
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child:  Column(
+                                  children: [
+                                    const Text('Result:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                                    const SizedBox(height: 20,),
+                                    Text("${Currency.get(context).resultconvert}"),
+                                  ],
+                                )
+                            ),
+
+                            const SizedBox(
+                              height: 40,
+                            ),
+
+                            Container(
+                                padding: const EdgeInsets.all(16.0), // Add margin of 16 pixels to all sides
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Column(
+                                  children: [
+
+                                    const Text("Historical From USD TO AUD "),
+                                    Text("Date ${last7Days.first}"),
+                                    Text('$ResultHistorical')
+                                  ],
+                                )
+                            ),
+
+                          ],
+                        ),
                       ),
                     ),
                   ),

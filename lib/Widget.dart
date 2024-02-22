@@ -10,7 +10,9 @@ dynamic Base_Currency;
 dynamic To_Currency ;
 var database;
 var ResultConvert ;
-late String last7Days;
+List<String> last7Days = [];
+dynamic HistoricalRate ;
+double ResultHistorical=0.0;
 var FormKey = GlobalKey<FormState>();
 
 

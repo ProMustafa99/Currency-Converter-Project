@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:currency_converter/Error/Error.dart';
+import 'package:currency_converter/Widget.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -11,6 +12,18 @@ class CurrencyApi {
 
   Future<Map<String, dynamic>> fetchLatestRates() async {
     final response = await http.get(Uri.parse('$apiUrl?apikey=$apiKey'));
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      HttpError.getMessage(response.statusCode);
+      throw Exception('Failed to load latest currency rates');
+    }
+  }
+
+
+  Future<Map<String, dynamic>> fetchHistoricalRateRates(String Date) async {
+    final response = await http.get(Uri.parse('$apiUrl?apikey=$apiKey&currencies=AUD&date_from=${Date}T08%3A47%3A25.289Z&date_to=${Date}T08%3A47%3A25.289Z'));
 
     if (response.statusCode == 200) {
       return json.decode(response.body);
