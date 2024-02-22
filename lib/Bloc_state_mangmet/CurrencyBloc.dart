@@ -117,6 +117,7 @@ class  FetchCurrency {
 
     }
     catch(e) {
+      print("Done");
       ErrorHandler(e.toString());
     }
   }
