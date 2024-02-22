@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:currency_converter/API/api.dart';
 import 'package:currency_converter/Bloc_state_mangmet/states.dart';
 import 'package:currency_converter/Error/Error.dart';
+import 'package:currency_converter/Global/Variable/variable.dart';
+import 'package:currency_converter/Local_Data_Base/DataBase.dart';
 import 'package:currency_converter/Shared_Preferences/shared_preferences.dart';
-import 'package:currency_converter/Widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -71,7 +71,7 @@ class Currency  extends Cubit<StatesApp> {
 
     try {
       Map DatatHistorical = await currencyApi.fetchHistoricalRateRates(last7Days.first);
-      ResultHistorical = DatatHistorical['data'][last7Days.last]["AUD"];
+      HistoricalRate = DatatHistorical['data'][last7Days.last]["AUD"];
     }
     catch(e){
       print("${e} *********************");
@@ -86,7 +86,6 @@ class Currency  extends Cubit<StatesApp> {
 
 
 class  FetchCurrency {
-
   final CreateDataBase CDB = CreateDataBase();
   late CurrencyApi api;
 
@@ -121,75 +120,7 @@ class  FetchCurrency {
   }
 }
 
-class CreateDataBase {
-
-  final InsertData ObjectInsert =InsertData();
-  final GetData ObjectGetData =GetData();
-
-  Future<void> DataBaseInfo() async {
-    database = await openDatabase(
-        'currency.db',
-        version: 1,
-        onCreate: (database, version) async {
-          await database.execute('CREATE TABLE CurrencyInfo (ID INTEGER PRIMARY KEY, CodeCurrency TEXT)')
-              .then((value) => null)
-              .catchError((e) => Tosta_mes(mess: e.toString()));
-        },
-        onOpen: (database)   {
-          print("Done open Data");
-          //await ObjectInsert.insert("mustafa salameh", database);
-        }
-    );
 
 
-  }
-}
-
-class InsertData {
-  final GetData ObjectGetData =GetData();
-
-  Future<void> insert (String data, database) async {
-    database.transaction((txn) async {
-      await txn.rawQuery( 'INSERT INTO CurrencyInfo(CodeCurrency) VALUES("${data}")')
-          .then((value) => null)
-          .catchError((e)=> print("** ${e.toString()}*****"));
-    });
-
-    print("******************** Done Insert All Data ********************");
-    await ObjectGetData.getdata(database);
-  }
-}
-
-class GetData {
-  getdata(database) {
-    print("Getting Data...");
-    database.rawQuery('SELECT * FROM CurrencyInfo').then((value) {
-      listCrrany.clear();
-       listCrrany  = value.map((item) => item['CodeCurrency']).toList();
-    });
-  }
-}
-
-class apitest {
-
-  final base_link;
-  final key;
-  final date;
-  apitest(this.base_link , this.key,  this.date) {
-
-
-  }
-
-  Future <void> test ()  async{
-    final response = await http.get(Uri.parse('$base_link?$key&$date'));
-    if (response.statusCode == 200) {
-       HistoricalRate = json.decode(response.body)['data'][last7Days.last]['AUD'];
-       print(HistoricalRate);
-
-    } else {
-      print('Failed to load data');
-    }
-  }
-}
 
 

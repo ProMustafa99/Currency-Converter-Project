@@ -1,5 +1,5 @@
+import 'package:currency_converter/Global/Variable/variable.dart';
 import 'package:currency_converter/Style/Style.dart';
-import 'package:currency_converter/Widget.dart';
 import 'package:flutter/material.dart';
 
 class DropDownMenu extends StatefulWidget {

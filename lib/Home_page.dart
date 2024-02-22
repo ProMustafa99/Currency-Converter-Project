@@ -1,10 +1,11 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:currency_converter/Bloc_state_mangmet/states.dart';
 import 'package:currency_converter/CustomDropDown.dart';
-import 'package:currency_converter/Widget.dart';
+import 'package:currency_converter/Global/Widget/Widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Bloc_state_mangmet/CurrencyBloc.dart';
+import 'Global/Variable/variable.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -132,7 +133,7 @@ class _HomePageState extends State<HomePage> {
 
                                     const Text("Historical From USD TO AUD "),
                                     Text("Date ${last7Days.first}"),
-                                    Text('$ResultHistorical')
+                                    Text('$HistoricalRate')
                                   ],
                                 )
                             ),

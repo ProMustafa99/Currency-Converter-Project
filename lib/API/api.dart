@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:currency_converter/Error/Error.dart';
-import 'package:currency_converter/Widget.dart';
 import 'package:http/http.dart' as http;
 
 

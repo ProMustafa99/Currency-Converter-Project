@@ -3,19 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sqflite/sqlite_api.dart';
 
-
-// Global Vrabel
-List listCrrany = [];
-dynamic Base_Currency;
-dynamic To_Currency ;
-var database;
-var ResultConvert ;
-List<String> last7Days = [];
-dynamic HistoricalRate ;
-double ResultHistorical=0.0;
-var FormKey = GlobalKey<FormState>();
-
-
 // Global Widget
 
 Widget InputUser(TextEditingController controller) {
