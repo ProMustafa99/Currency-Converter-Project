@@ -43,4 +43,19 @@ Key Features of the Chosen Design Pattern:
 7. **Code Reusability**: Encourages the creation of reusable components, enhancing efficiency in development.
 
 8. **Scalability**: Provides a solid foundation for building scalable applications.
+
+# why Choice CachedNetworkImage Library for image caching 
+
+Opting for cacheNetworkImage provides a robust caching mechanism, enabling the local storage of fetched images. This improvement enhances user experience by reducing the necessity to fetch images repeatedly from the network, leading to faster load times and decreased data usage. Furthermore, the library furnishes offline support, permitting users to access previously loaded images even when offline. This feature proves especially beneficial for applications operating in environments with intermittent or restricted network connectivity.
+
+
+# Choice of SQLite Library for Local Storage
+
+The decision to utilize the SQLite library for local storage in our project is based on several key factors that align with our development requirements and goals:
+
+1. **Robustness and Reliability**: SQLite is a well-established, lightweight, and self-contained database engine that is known for its reliability. It provides robust data storage capabilities, ensuring the integrity and durability of our application's data.
+
+2. **Cross-Platform Compatibility**: SQLite is cross-platform and widely supported, making it an ideal choice for projects targeting multiple platforms such as iOS, Android, and web. This ensures consistent data storage and retrieval mechanisms across different environments.
+
+
  
