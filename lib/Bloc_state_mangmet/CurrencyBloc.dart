@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:currency_converter/API/api.dart';
 import 'package:currency_converter/Bloc_state_mangmet/states.dart';
+import 'package:currency_converter/Error/Error.dart';
 import 'package:currency_converter/Shared_Preferences/shared_preferences.dart';
 import 'package:currency_converter/Widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,6 +22,7 @@ class Currency  extends Cubit<StatesApp> {
 
   void fetchData() async {
     await _fetchcurrency.fetchData();
+    await Historical ();
     emit(DoneFeactGetDataState());
   }
 
@@ -36,6 +39,35 @@ class Currency  extends Cubit<StatesApp> {
       print('Failed to load data');
       emit(ErrorConvert());
     }
+  }
+
+  Future <void> SwapCurrency () async {
+    dynamic swap ;
+    swap = Base_Currency;
+    Base_Currency = To_Currency;
+    To_Currency = swap;
+    emit(DoneSwapData());
+  }
+
+  Future <void> Historical () async {
+
+
+    DateTime today = DateTime.now();
+    today = DateTime(today.year, today.month, today.day); // Set time to midnight
+    DateTime sevenDaysAgo = today.subtract(Duration(days: 7));
+    DateFormat formatter = DateFormat('yyyy-MM-dd');
+    DateTime dateWithoutTime = DateTime(sevenDaysAgo.year, sevenDaysAgo.month, sevenDaysAgo.day);
+    String formattedDate = formatter.format(dateWithoutTime);
+    last7Days = formattedDate;
+    print(last7Days);
+
+    apitest(
+        "https://api.freecurrencyapi.com/v1/historical",
+        "apikey=fca_live_rKuggFlZGYXHB4LPf3Xd1uGFfdpc1brmnqelV37P",
+        "currencies=EUR&date_from=${last7Days}T08%3A47%3A25.289Z&date_to=${last7Days}T08%3A47%3A25.289Z").test();
+
+    emit(DoneHistorical());
+
   }
 }
 
@@ -72,7 +104,7 @@ class  FetchCurrency {
 
     }
     catch(e) {
-      print("sdfdsf");
+      ErrorHandler(e.toString());
     }
   }
 }
@@ -126,5 +158,22 @@ class GetData {
   }
 }
 
+class apitest {
+
+  final base_link;
+  final key;
+  final date;
+  apitest(this.base_link , this.key,  this.date);
+
+  Future <void> test ()  async{
+    final response = await http.get(Uri.parse('$base_link?$key&$date'));
+    if (response.statusCode == 200) {
+      json.decode(response.body);
+      print( json.decode(response.body));
+    } else {
+      print('Failed to load data');
+    }
+  }
+}
 
 

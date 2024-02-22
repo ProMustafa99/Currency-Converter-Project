@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:currency_converter/Error/Error.dart';
 import 'package:http/http.dart' as http;
 
 
@@ -14,6 +15,7 @@ class CurrencyApi {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
+      HttpError.getMessage(response.statusCode);
       throw Exception('Failed to load latest currency rates');
     }
   }
@@ -29,7 +31,9 @@ class FlagApi {
 
     if (response.statusCode == 200) {
       return json.decode(response.body);
-    } else {
+    }
+    else {
+      HttpError.getMessage(response.statusCode);
       throw Exception('Failed to load country flags');
     }
   }
