@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:currency_converter/Bloc_state_mangmet/states.dart';
 import 'package:currency_converter/CustomDropDown.dart';
 import 'package:currency_converter/Global/Widget/Widget.dart';
+import 'package:currency_converter/Style/Style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'Bloc_state_mangmet/CurrencyBloc.dart';
@@ -131,9 +132,9 @@ class _HomePageState extends State<HomePage> {
                                 child: Column(
                                   children: [
 
-                                    const Text("Historical From USD TO AUD "),
-                                    Text("Date ${last7Days.first}"),
-                                    Text('$HistoricalRate')
+                                    const Text("Historical From USD TO AUD",style: AppTextStyles.titleTextStyle,),
+                                    Text("Date ${last7Days.first}" ,style: AppTextStyles.bodyTextStyle,),
+                                    Text('Value $HistoricalRate',style: AppTextStyles.bodyTextStyle,)
                                   ],
                                 )
                             ),

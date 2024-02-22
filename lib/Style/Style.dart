@@ -10,6 +10,6 @@ class AppTextStyles {
 
   static const TextStyle bodyTextStyle = TextStyle(
     fontSize: 16,
-    color: Colors.grey,
+    color: Colors.black,
   );
 }
