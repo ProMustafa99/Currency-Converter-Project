@@ -30,12 +30,15 @@ class Currency  extends Cubit<StatesApp> {
 
     final response = await http.get(Uri.parse(
         'https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_rKuggFlZGYXHB4LPf3Xd1uGFfdpc1brmnqelV37P&currencies=${Currencies}&base_currency=${base_currency}'));
+
     if (response.statusCode == 200) {
       Map CurrencyName =json.decode(response.body);
       resultconvert = CurrencyName['data'][Currencies] *Amount.toDouble();
       print(resultconvert);
       emit(DoneConvert());
-    } else {
+    }
+
+    else {
       print('Failed to load data');
       emit(ErrorConvert());
     }
@@ -83,7 +86,6 @@ class Currency  extends Cubit<StatesApp> {
 
   }
 }
-
 
 class  FetchCurrency {
   final CreateDataBase CDB = CreateDataBase();
