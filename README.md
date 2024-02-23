@@ -8,13 +8,8 @@ This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 
-## before running the project, you need to install the dependencies by running the following command:
-# dart run build_runner build --delete-conflicting-outputs
-
-
-# How Build the project
-
-In the user interface (UI) layer, develop your UI elements, screens, and controllers. Within the domain layer, specify use cases and repositories. Finally, in the data layer, establish data sources, repositories, and models.
+# Instructions on how to build the project Before starting the project, use this command : 
+## dart run build_runner build --delete-conflicting-outputs
 
 # Use BLoC for state management: 
 
