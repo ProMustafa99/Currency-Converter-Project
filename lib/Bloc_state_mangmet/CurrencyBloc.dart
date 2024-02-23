@@ -88,6 +88,9 @@ class Currency  extends Cubit<StatesApp> {
 }
 
 class  FetchCurrency {
+
+
+
   final CreateDataBase CDB = CreateDataBase();
   late CurrencyApi api;
 
@@ -101,12 +104,12 @@ class  FetchCurrency {
       apiKey: 'fca_live_rKuggFlZGYXHB4LPf3Xd1uGFfdpc1brmnqelV37P',
     );
 
+
     try {
       if (cash_helper ==null ) {
         Map CurrencyInfo = await currencyApi.fetchLatestRates();
-
         CurrencyInfo['data'].forEach((key, value) {
-          CDB.ObjectInsert.insert(key, database);
+           CDB.ObjectInsert.insert(key.toString().toLowerCase().substring(0,2), key, database);
         });
         Cash_Data().Save_Data(key: 'currency', value: true);
       }
@@ -117,7 +120,6 @@ class  FetchCurrency {
 
     }
     catch(e) {
-      print("Done");
       ErrorHandler(e.toString());
     }
   }

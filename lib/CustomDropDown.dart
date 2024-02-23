@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:currency_converter/Global/Variable/variable.dart';
 import 'package:currency_converter/Style/Style.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class DropDownMenu extends StatefulWidget {
 class _DropDownMenuState extends State<DropDownMenu> {
 
   late dynamic selectedValue;
+  Map t = {"yes":"asd"};
 
   @override
   void initState() {
@@ -39,7 +41,16 @@ class _DropDownMenuState extends State<DropDownMenu> {
         },
         items: widget.listCurrency.map((e) => DropdownMenuItem(
           value: e,
-          child: Text("$e" ,style: AppTextStyles.bodyTextStyle),
+          child: Row(
+            children: [
+              CachedNetworkImage(
+                imageUrl: "https://flagcdn.com/16x12/${e['FlagCurrency']}.png",
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
+               const SizedBox(width: 7,),
+               Text("${e['CodeCurrency']}")
+            ],
+          )
         )).toList(),
       ),
     );
