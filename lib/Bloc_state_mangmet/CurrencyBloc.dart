@@ -61,8 +61,7 @@ class Currency  extends Cubit<StatesApp> {
     DateFormat formatter = DateFormat('yyyy-MM-dd');
 
     for (int i = 0; i < 7; i++) {
-      DateTime dateWithoutTime =
-      DateTime(sevenDaysAgo.year, sevenDaysAgo.month, sevenDaysAgo.day);
+      DateTime dateWithoutTime = DateTime(sevenDaysAgo.year, sevenDaysAgo.month, sevenDaysAgo.day);
       String formattedDate = formatter.format(dateWithoutTime);
       last7Days.add(formattedDate);
       sevenDaysAgo = sevenDaysAgo.add(Duration(days: 1));
@@ -75,7 +74,8 @@ class Currency  extends Cubit<StatesApp> {
 
     try {
       Map DatatHistorical = await currencyApi.fetchHistoricalRateRates(last7Days.first);
-      HistoricalRate = DatatHistorical['data'][last7Days.last]["AUD"];
+      String key = DatatHistorical['data'].keys.first;
+      HistoricalRate = DatatHistorical['data'][key]["AUD"];
     }
     catch(e){
       print("${e} *********************");
