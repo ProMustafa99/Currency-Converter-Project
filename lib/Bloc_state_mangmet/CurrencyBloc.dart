@@ -23,6 +23,7 @@ class Currency  extends Cubit<StatesApp> {
   void fetchData() async {
     await _fetchcurrency.fetchData();
     await Historical ();
+    print("From Bloc Page ${listCrrany}");
     emit(DoneFeactGetDataState());
   }
 

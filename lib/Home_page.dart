@@ -29,6 +29,7 @@ class _HomePageState extends State<HomePage> {
             return ConditionalBuilder(
               condition: listCrrany.isNotEmpty,
               builder: (context) {
+                print("From Home Page ${listCrrany}");
 
                 return Scaffold(
                   appBar: AppBar(
@@ -52,6 +53,7 @@ class _HomePageState extends State<HomePage> {
                                   DropDownMenu(
                                       listCrrany ,
                                       onChanged: (newValue) {
+                                        print("From -> ${newValue}");
                                         Base_Currency = newValue;
                                       }
                                   ),
@@ -68,6 +70,7 @@ class _HomePageState extends State<HomePage> {
                                     child: DropDownMenu(
                                       listCrrany,
                                       onChanged: (newValue){
+                                        print("To -> ${newValue}");
                                         To_Currency = newValue;
                                       },
                                     ),

@@ -36,7 +36,6 @@ class InsertData {
           .catchError((e)=> print("** ${e.toString()}*****"));
     });
 
-    print("******************** Done Insert All Data ********************");
     await ObjectGetData.getdata(database);
   }
 }
@@ -45,9 +44,7 @@ class GetData {
   getdata(database) {
     print("Getting Data...");
     database.rawQuery('SELECT * FROM CurrencyInfo').then((value) {
-      listCrrany.clear();
       listCrrany  = value.map((item) => item['CodeCurrency']).toList();
-      print(listCrrany);
     });
   }
 }

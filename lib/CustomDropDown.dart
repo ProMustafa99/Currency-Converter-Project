@@ -1,7 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:currency_converter/Global/Variable/variable.dart';
-import 'package:currency_converter/Style/Style.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class DropDownMenu extends StatefulWidget {
   final List<dynamic> listCurrency;
@@ -17,12 +16,14 @@ class _DropDownMenuState extends State<DropDownMenu> {
 
   late dynamic selectedValue;
 
+
   @override
   void initState() {
     super.initState();
-    selectedValue = widget.listCurrency.isNotEmpty ? widget.listCurrency.first: null;
+    selectedValue = widget.listCurrency.first;
     Base_Currency = To_Currency = selectedValue;
-    print("selectedValue ${selectedValue}");
+    print("From Custom Menu Page ${listCrrany}");
+
   }
 
   @override
@@ -31,18 +32,22 @@ class _DropDownMenuState extends State<DropDownMenu> {
       child: DropdownButton(
         menuMaxHeight: MediaQuery.of(context).size.height * 0.4,
         isExpanded: true,
-        hint: const Text("Select currency",style: AppTextStyles.bodyTextStyle),
-        value: selectedValue,
+        value:selectedValue,
         onChanged: (val) {
           setState(() {
             selectedValue = val;
+            print("val ${val} ************************* ");
           });
           widget.onChanged?.call(val); // Call the onChanged callback if provided
         },
-        items: widget.listCurrency.map((e) => DropdownMenuItem(
-          value: e,
+        items:widget.listCurrency.map((e) => DropdownMenuItem(
+          value:e,
           child: Row(
             children: [
+              CachedNetworkImage(
+                imageUrl: "https://flagcdn.com/16x12/${e.toString().toLowerCase().substring(0,2)}.png",
+                errorWidget: (context, url, error) => Icon(Icons.flag),
+              ),
                const SizedBox(width: 7,),
                Text("${e}")
             ],
