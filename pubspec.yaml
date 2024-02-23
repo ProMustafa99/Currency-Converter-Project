@@ -39,6 +39,7 @@ dependencies:
   conditional_builder_null_safety: ^0.0.6
   intl: ^0.17.0
   cached_network_image: ^3.3.0
+  build_runner: ^2.4.8
 
 
   # The following adds the Cupertino Icons font to your application.
