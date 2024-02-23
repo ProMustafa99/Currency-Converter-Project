@@ -11,11 +11,6 @@ A few resources to get you started if this is your first Flutter project:
 # Instructions on how to build the project Before starting the project, use this command : 
 ## dart run build_runner build --delete-conflicting-outputs
 
-
-# How Build the project
-
-In the user interface (UI) layer, develop your UI elements, screens, and controllers. Within the domain layer, specify use cases and repositories. Finally, in the data layer, establish data sources, repositories, and models.
-
 # Use BLoC for state management: 
 
 In the architecture of our application, we have adopted the BLoC (Business Logic Component) design pattern for managing state and handling user interactions. BLoC architecture offers a clear separation of concerns, making it an ideal choice for structuring complex applications like ours. Below are the justifications for choosing BLoC as our design pattern :
