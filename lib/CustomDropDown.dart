@@ -16,13 +16,13 @@ class DropDownMenu extends StatefulWidget {
 class _DropDownMenuState extends State<DropDownMenu> {
 
   late dynamic selectedValue;
-  Map t = {"yes":"asd"};
 
   @override
   void initState() {
     super.initState();
     selectedValue = widget.listCurrency.isNotEmpty ? widget.listCurrency.first: null;
     Base_Currency = To_Currency = selectedValue;
+    print("selectedValue ${selectedValue}");
   }
 
   @override
@@ -43,12 +43,8 @@ class _DropDownMenuState extends State<DropDownMenu> {
           value: e,
           child: Row(
             children: [
-              CachedNetworkImage(
-                imageUrl: "https://flagcdn.com/16x12/${e['FlagCurrency']}.png",
-                errorWidget: (context, url, error) => Icon(Icons.error),
-              ),
                const SizedBox(width: 7,),
-               Text("${e['CodeCurrency']}")
+               Text("${e}")
             ],
           )
         )).toList(),

@@ -12,7 +12,7 @@ class CreateDataBase {
         'currency.db',
         version: 1,
         onCreate: (database, version) async {
-          await database.execute('CREATE TABLE CurrencyInfo (ID INTEGER PRIMARY KEY, FlagCurrency TEXT, CodeCurrency TEXT)')
+          await database.execute('CREATE TABLE CurrencyInfo (ID INTEGER PRIMARY KEY,CodeCurrency TEXT)')
               .then((value) => null)
               .catchError((e) => Tosta_mes(mess: e.toString()));
         },
@@ -29,9 +29,9 @@ class CreateDataBase {
 class InsertData {
   final GetData ObjectGetData =GetData();
 
-  Future<void> insert (String FlagCurrancy ,String curranyCode, database) async {
+  Future<void> insert (String curranyCode, database) async {
     database.transaction((txn) async {
-      await txn.rawQuery( 'INSERT INTO CurrencyInfo(FlagCurrency,CodeCurrency) VALUES("${FlagCurrancy}","${curranyCode}")')
+      await txn.rawQuery( 'INSERT INTO CurrencyInfo(CodeCurrency) VALUES("${curranyCode}")')
           .then((value) => null)
           .catchError((e)=> print("** ${e.toString()}*****"));
     });
@@ -46,7 +46,7 @@ class GetData {
     print("Getting Data...");
     database.rawQuery('SELECT * FROM CurrencyInfo').then((value) {
       listCrrany.clear();
-      listCrrany  = value.map((item) => item).toList();
+      listCrrany  = value.map((item) => item['CodeCurrency']).toList();
       print(listCrrany);
     });
   }

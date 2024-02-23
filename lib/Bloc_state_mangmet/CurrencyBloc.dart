@@ -109,7 +109,7 @@ class  FetchCurrency {
       if (cash_helper ==null ) {
         Map CurrencyInfo = await currencyApi.fetchLatestRates();
         CurrencyInfo['data'].forEach((key, value) {
-           CDB.ObjectInsert.insert(key.toString().toLowerCase().substring(0,2), key, database);
+           CDB.ObjectInsert.insert(key, database);
         });
         Cash_Data().Save_Data(key: 'currency', value: true);
       }
