@@ -8,8 +8,8 @@ This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 
-## before running the project, you need to install the dependencies by running the following command:
-# dart run build_runner build --delete-conflicting-outputs
+# Instructions on how to build the project Before starting the project, use this command : 
+## dart run build_runner build --delete-conflicting-outputs
 
 
 # How Build the project
