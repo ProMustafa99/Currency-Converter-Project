@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:currency_converter/API/api.dart';
 import 'package:currency_converter/Bloc_state_mangmet/states.dart';
@@ -18,6 +19,7 @@ class Currency  extends Cubit<StatesApp> {
 
   final FetchCurrency _fetchcurrency = FetchCurrency();
   double resultconvert =0;
+  dynamic swap ;
 
 
   void fetchData() async {
@@ -29,24 +31,35 @@ class Currency  extends Cubit<StatesApp> {
 
   Future<void> convertcurrency(String base_currency, String Currencies, Amount) async {
 
-    final response = await http.get(Uri.parse(
-        'https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_rKuggFlZGYXHB4LPf3Xd1uGFfdpc1brmnqelV37P&currencies=${Currencies}&base_currency=${base_currency}'));
 
-    if (response.statusCode == 200) {
-      Map CurrencyName =json.decode(response.body);
-      resultconvert = CurrencyName['data'][Currencies] *Amount.toDouble();
-      print(resultconvert);
-      emit(DoneConvert());
+    if (Amount <0 ){
+      ErrorHandler("The value must be greater than 0");
     }
 
     else {
-      print('Failed to load data');
-      emit(ErrorConvert());
+      final currencyApi = CurrencyApi(
+        apiUrl: 'https://api.freecurrencyapi.com/v1/latest',
+        apiKey: 'fca_live_rKuggFlZGYXHB4LPf3Xd1uGFfdpc1brmnqelV37P',
+      );
+
+      try {
+        Map CurrencyName = await currencyApi.ConvertCurrancyApi(base_currency, Currencies);
+        resultconvert = CurrencyName['data'][Currencies] *Amount.toDouble();
+        emit(DoneConvert());
+      }
+
+      catch (e) {
+        emit(ErrorConvert());
+      }
+
     }
+
   }
 
-  Future <void> SwapCurrency () async {
-    dynamic swap ;
+  Future <void> SwapCurrency (String base_currency, String Currencies) async {
+
+    Base_Currency = base_currency; // BRL
+    To_Currency = Currencies; // CHF
     swap = Base_Currency;
     Base_Currency = To_Currency;
     To_Currency = swap;
@@ -90,8 +103,6 @@ class Currency  extends Cubit<StatesApp> {
 
 class  FetchCurrency {
 
-
-
   final CreateDataBase CDB = CreateDataBase();
   late CurrencyApi api;
 
@@ -109,6 +120,7 @@ class  FetchCurrency {
     try {
       if (cash_helper ==null ) {
         Map CurrencyInfo = await currencyApi.fetchLatestRates();
+        print("Cur ${CurrencyInfo}");
         CurrencyInfo['data'].forEach((key, value) {
            CDB.ObjectInsert.insert(key, database);
         });

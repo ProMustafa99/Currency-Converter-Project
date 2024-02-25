@@ -40,6 +40,7 @@ dependencies:
   intl: ^0.17.0
   cached_network_image: ^3.3.0
   build_runner: ^2.4.8
+  mockito: ^5.4.3
 
 
   # The following adds the Cupertino Icons font to your application.
