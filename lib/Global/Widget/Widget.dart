@@ -10,8 +10,10 @@ Widget InputUser(TextEditingController controller) {
       controller: controller,
       keyboardType: TextInputType.number,
       decoration: const InputDecoration(
+        filled: true,
+        fillColor: Colors.white,
         border: OutlineInputBorder(),
-        hintText: 'Amount',
+        hintText: 'Input Value To Convert '
       ),
       validator: (value) {
         if (value == null || value.isEmpty) {

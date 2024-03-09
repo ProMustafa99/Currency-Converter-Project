@@ -10,3 +10,5 @@ var ResultConvert ;
 List<String> last7Days = [];
 dynamic HistoricalRate ;
 var FormKey = GlobalKey<FormState>();
+Color mainColor = Color(0xFF212936);
+

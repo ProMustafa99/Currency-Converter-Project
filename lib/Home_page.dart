@@ -29,122 +29,92 @@ class _HomePageState extends State<HomePage> {
             return ConditionalBuilder(
               condition: listCrrany.isNotEmpty,
               builder: (context) {
-                print("From Home Page ${listCrrany}");
-
                 return Scaffold(
-                  appBar: AppBar(
-                    title: const Text('Currency Converter'),
-                  ),
+                  backgroundColor: mainColor,
                   body: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Form(
-                      key: FormKey,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            InputUser(Amount),
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            Container(
-                              child:  Row(
-                                children: [
-                                  Expanded(child: 
-                                  DropDownMenu(
-                                      listCrrany ,
-                                      onChanged: (newValue) {
-                                        print("From -> ${newValue}");
-                                        Base_Currency = newValue;
-                                      }
-                                  ),
-                                  ),
-                                  const SizedBox(width: 15),
-                                  IconButton(
-                                      onPressed: (){
-
-                                      },
-                                      icon: const Icon(Icons.swap_horiz)
-                                  ),
-                                  const SizedBox(width: 15),
-                                  Expanded(
-                                    child: DropDownMenu(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0 ,vertical: 90.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                            width: 200,
+                            child: Text("Currency Convert",style:AppTextStyles.header ,)
+                        ),
+                        const SizedBox(height: 40,),
+                        Form(
+                          key: FormKey,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                InputUser(Amount),
+                                const SizedBox(height: 40,),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: DropDownMenu(
+                                          listCrrany ,
+                                          onChanged: (newValue) {
+                                            Base_Currency = newValue;
+                                          }
+                                      ),
+                                    ),
+                                    const SizedBox(width: 40,),
+                                    Expanded(
+                                      child: DropDownMenu(
                                       listCrrany,
                                       onChanged: (newValue){
-                                        print("To -> ${newValue}");
                                         To_Currency = newValue;
                                       },
                                     ),
-                                  )
-                                ],
-                              ) ,
-                            ),
 
-                            const SizedBox(height: 40,),
+                                    )
 
-                            ElevatedButton(
-                              onPressed: () {
-                                String text = Amount.text;
-                                double value = double.tryParse(text) ?? 0.0;
-                                if(FormKey.currentState!.validate()) {
-                                  Currency.get(context).convertcurrency(Base_Currency, To_Currency, value);
-                                }
-                              },
-
-                              style: ElevatedButton.styleFrom(
-                                padding: EdgeInsets.zero, // Remove padding to stretch the button
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8), // Optional: set border radius
-                                ),
-                                minimumSize: const Size(double.infinity, 48), // Set minimum size to span width and height 48
-                              ),
-                              child: const Text("Convert"),
-
-                            ),
-
-                            const SizedBox(
-                              height: 40,
-                            ),
-
-                            Container(
-                                padding: const EdgeInsets.all(10.0), // Add margin of 16 pixels to all sides
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                  color: Colors.blue.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child:  Column(
-                                  children: [
-                                    const Text('Result:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                                    const SizedBox(height: 20,),
-                                    Text("${Currency.get(context).resultconvert}"),
                                   ],
-                                )
-                            ),
-
-                            const SizedBox(
-                              height: 40,
-                            ),
-
-                            Container(
-                                padding: const EdgeInsets.all(16.0), // Add margin of 16 pixels to all sides
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                  color: Colors.blue.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(6),
                                 ),
-                                child: Column(
-                                  children: [
+                                const SizedBox(height: 40,),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    String text = Amount.text;
+                                    double value = double.tryParse(text) ?? 0.0;
+                                    if(FormKey.currentState!.validate()) {
+                                      Currency.get(context).convertcurrency(Base_Currency, To_Currency, value);
+                                    }
+                                  },
 
-                                    const Text("Historical From USD TO AUD",style: AppTextStyles.titleTextStyle,),
-                                    Text("Date ${last7Days.first}" ,style: AppTextStyles.bodyTextStyle,),
-                                    Text('Value $HistoricalRate',style: AppTextStyles.bodyTextStyle,)
-                                  ],
-                                )
+                                  style: ElevatedButton.styleFrom(
+
+                                    padding: EdgeInsets.zero, // Remove padding to stretch the button
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8), // Optional: set border radius
+                                    ),
+                                    minimumSize: const Size(double.infinity, 48),
+                                    backgroundColor: Colors.white,
+                                  ),
+                                  child: const Text("Convert",style: AppTextStyles.bodyTextStyle,),
+
+                                ),
+                                const SizedBox(height: 40,),
+                                Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.all(16.0),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                  ),
+
+                                  child:  Column (
+                                    children: [
+                                      const Text("Result" , style:AppTextStyles.titleTextStyle,),
+                                      const SizedBox(height: 20,),
+                                      Text("${Currency.get(context).resultconvert}"),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-
-                          ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 );

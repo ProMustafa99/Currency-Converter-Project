@@ -22,13 +22,16 @@ class _DropDownMenuState extends State<DropDownMenu> {
     super.initState();
     selectedValue = widget.listCurrency.first;
     Base_Currency = To_Currency = selectedValue;
-    print("From Custom Menu Page ${listCrrany}");
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(vertical: 4.0,horizontal: 18.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0)
+      ),
       child: DropdownButton(
         menuMaxHeight: MediaQuery.of(context).size.height * 0.4,
         isExpanded: true,
@@ -36,7 +39,6 @@ class _DropDownMenuState extends State<DropDownMenu> {
         onChanged: (val) {
           setState(() {
             selectedValue = val;
-            print("val ${val} ************************* ");
           });
           widget.onChanged?.call(val); // Call the onChanged callback if provided
         },
@@ -49,7 +51,7 @@ class _DropDownMenuState extends State<DropDownMenu> {
                 errorWidget: (context, url, error) => Icon(Icons.flag),
               ),
                const SizedBox(width: 7,),
-               Text("${e}")
+               Text("${e}",)
             ],
           )
         )).toList(),

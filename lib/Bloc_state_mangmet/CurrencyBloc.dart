@@ -87,6 +87,7 @@ class Currency  extends Cubit<StatesApp> {
 
     try {
       Map DatatHistorical = await currencyApi.fetchHistoricalRateRates(last7Days.first);
+      print("DatatHistorical ${DatatHistorical}");
       String key = DatatHistorical['data'].keys.first;
       HistoricalRate = DatatHistorical['data'][key]["AUD"];
     }
