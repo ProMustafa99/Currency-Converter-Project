@@ -16,7 +16,7 @@ class AppTextStyles {
   );
 
   static const TextStyle bodyTextStyle = TextStyle(
-    fontSize: 16,
+    fontSize: 18,
     color: Colors.black,
   );
 }

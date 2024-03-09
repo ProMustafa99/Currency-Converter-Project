@@ -31,19 +31,19 @@ class _HomePageState extends State<HomePage> {
               builder: (context) {
                 return Scaffold(
                   backgroundColor: mainColor,
-                  body: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0 ,vertical: 90.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                            width: 200,
-                            child: Text("Currency Convert",style:AppTextStyles.header ,)
-                        ),
-                        const SizedBox(height: 40,),
-                        Form(
-                          key: FormKey,
-                          child: SingleChildScrollView(
+                  body: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0 ,vertical: 90.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                              width: 200,
+                              child: Text("Currency Convert",style:AppTextStyles.header ,)
+                          ),
+                          const SizedBox(height: 40,),
+                          Form(
+                            key: FormKey,
                             child: Column(
                               children: [
                                 InputUser(Amount),
@@ -66,10 +66,27 @@ class _HomePageState extends State<HomePage> {
                                         To_Currency = newValue;
                                       },
                                     ),
-
+                            
                                     )
-
+                            
                                   ],
+                                ),
+                                const SizedBox(height: 40,),
+                                Container(
+                                  width: double.infinity,
+                                  padding: const EdgeInsets.all(16.0),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                            
+                                  child:  Column (
+                                    children: [
+                                      const Text("Result" , style:AppTextStyles.titleTextStyle,),
+                                      const SizedBox(height: 20,),
+                                      Text("${Currency.get(context).resultconvert}",style: AppTextStyles.bodyTextStyle,),
+                                    ],
+                                  ),
                                 ),
                                 const SizedBox(height: 40,),
                                 ElevatedButton(
@@ -93,28 +110,11 @@ class _HomePageState extends State<HomePage> {
                                   child: const Text("Convert",style: AppTextStyles.bodyTextStyle,),
 
                                 ),
-                                const SizedBox(height: 40,),
-                                Container(
-                                  width: double.infinity,
-                                  padding: const EdgeInsets.all(16.0),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8.0),
-                                  ),
-
-                                  child:  Column (
-                                    children: [
-                                      const Text("Result" , style:AppTextStyles.titleTextStyle,),
-                                      const SizedBox(height: 20,),
-                                      Text("${Currency.get(context).resultconvert}"),
-                                    ],
-                                  ),
-                                ),
                               ],
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );
